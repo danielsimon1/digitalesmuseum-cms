@@ -1,0 +1,14 @@
+<div class="section"></div>
+<main>
+    <a class='dropdown-button btn indigo' data-activates='dropdown1'>Person auswählen</a>
+
+    <ul id='dropdown1' class='dropdown-content'>
+        <li><a>Bitte Person auswählen</a></li>
+        <li class="divider"></li>
+        <li ng-repeat="person in data.persons">{{ person.vorname + ' ' + person.nachname }}</li>
+    </ul>
+
+    <center>
+
+    </center>
+</main>

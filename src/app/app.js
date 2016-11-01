@@ -1,6 +1,7 @@
 angular.module('app', [
     'ui.router',
-    'app.login'
+    'app.login',
+    'app.persons'
 ]);
 angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
