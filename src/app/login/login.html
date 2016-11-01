@@ -17,14 +17,14 @@
 
                     <div class='row'>
                         <div class='input-field col s12'>
-                            <input class='validate' type='text' name='username' id='username' />
+                            <input class='validate' type='text' name='username' id='username' ng-model="data.username" />
                             <label for='username'>Benutzername</label>
                         </div>
                     </div>
 
                     <div class='row'>
                         <div class='input-field col s12'>
-                            <input class='validate' type='password' name='password' id='password' />
+                            <input class='validate' type='password' name='password' id='password' ng-model="data.password" />
                             <label for='password'>Passwort</label>
                         </div>
                         <label style='float: right;'>
@@ -35,7 +35,7 @@
                     <br />
                     <center>
                         <div class='row'>
-                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo'>Einloggen</button>
+                            <button type='submit' name='btn_login' class='col s12 btn btn-large waves-effect indigo' ng-click="login()">Einloggen</button>
                         </div>
                     </center>
                 </form>
