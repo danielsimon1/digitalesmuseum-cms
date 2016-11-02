@@ -2,25 +2,28 @@
 <main style="padding: 0 50px 0 50px">
     <div class="row">
         <div class="col s3 m3 l3">
-            <a class='dropdown-button btn indigo' data-activates='dropdown1'>Person auswählen</a>
+            <a class='dropdown-button btn green' data-activates='dropdown1'>
+                <span ng-show="data.selectedPerson.id">{{ data.selectedPerson.vorname + ' ' + data.selectedPerson.nachname }}</span>
+                <span ng-show="!data.selectedPerson.id">Bitte auswählen</span>
+            </a>
             <ul id='dropdown1' class='dropdown-content'>
                 <li><a>Bitte Person auswählen</a></li>
                 <li class="divider"></li>
-                <li ng-repeat="person in data.persons">{{ person.vorname + ' ' + person.nachname }}</li>
+                <li ng-repeat="person in data.persons"><a ng-click="changePerson(person.id)">{{ person.vorname + ' ' + person.nachname }}</a></li>
             </ul>
         </div>
 
-        <div class="col s4 m4 l4">
+        <div class="col s4 m4 l4" ng-show="data.selectedPerson.id">
             <div class="card horizontal">
                 <div class="card-image">
-                    BILD
+                    <img ng-src="{{ data.selectedPerson.portrait.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}">
                 </div>
                 <div class="card-stacked">
                     <div class="card-content">
-                        <span class="card-title">Name</span>
-                        <p>Caption</p>
-                        <div class="chip">
-                            Tag
+                        <span class="card-title">{{ data.selectedPerson.vorname + ' ' + data.selectedPerson.nachname }}</span>
+                        <p style="margin-bottom: 10px">{{ data.selectedPerson.caption }}</p>
+                        <div class="chip" ng-repeat="chip in data.selectedPerson.chips">
+                            {{ chip.text }}
                         </div>
                     </div>
 
@@ -31,7 +34,7 @@
     </div>
     <center>
 
-        <table>
+        <table class="bordered" ng-show="data.selectedPerson.id">
             <thead>
             <tr>
                 <th data-field="id">Typ</th>
@@ -41,10 +44,10 @@
             </thead>
 
             <tbody>
-            <tr>
-                <td>Type</td>
-                <td>AFSDKF</td>
-                <td>IMAGE (if exist)</td>
+            <tr ng-repeat="slide in data.selectedPerson.slides">
+                <td>{{ slide.type }}</td>
+                <td>{{ slide.type === "DataTile" ? slide.payload : slide.caption }}</td>
+                <td><span ng-show="slide.type === 'ImageTile'"><img ng-src="{{ slide.src.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}"></span></td>
             </tr>
             </tbody>
         </table>
