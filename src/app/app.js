@@ -10,7 +10,7 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: 'src/app/menu/menu.html',
             controller: 'AppCtrl'
         });
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("persons");
 
 }).controller('AppCtrl', function ($state, $scope) {
 
