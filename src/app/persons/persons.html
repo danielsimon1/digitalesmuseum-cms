@@ -9,7 +9,11 @@
             <ul id='dropdown1' class='dropdown-content'>
                 <li><a>Person auswählen</a></li>
                 <li class="divider"></li>
-                <li ng-repeat="person in data.persons"><a ng-click="changePerson(person.id)">{{ person.vorname + ' ' + person.nachname }}</a></li>
+                <li ng-repeat="person in data.persons">
+                    <a ng-click="changePerson(person.id)">
+                        {{ person.vorname + ' ' + person.nachname }}
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -30,6 +34,9 @@
                 </div>
             </div>
         </div>
+        <div class="col s3 m3 l3" ng-show="data.selectedPerson.id">
+            <button class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></button>
+        </div>
 
     </div>
     <center>
@@ -37,9 +44,10 @@
         <table class="bordered" ng-show="data.selectedPerson.id">
             <thead>
             <tr>
-                <th data-field="id">Typ</th>
-                <th data-field="name">Caption / Payload</th>
-                <th data-field="price">Bild</th>
+                <th>Typ</th>
+                <th>Caption / Payload</th>
+                <th>Bild</th>
+                <th>Aktionen</th>
             </tr>
             </thead>
 
@@ -48,6 +56,16 @@
                 <td>{{ slide.type }}</td>
                 <td>{{ slide.type === "DataTile" ? slide.payload : slide.caption }}</td>
                 <td><span ng-show="slide.type === 'ImageTile'"><img ng-src="{{ slide.src.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}"></span></td>
+                <td>
+                    <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">edit</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                </td>
+            </tr>
+            <tr>
+                <td><a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             </tbody>
         </table>
