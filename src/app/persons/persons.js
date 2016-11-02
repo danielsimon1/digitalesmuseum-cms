@@ -17,7 +17,7 @@ angular.module('app.persons').config(function ($stateProvider) {
             $log.log('persons', persons);
             $scope.data.persons = persons;
         }, function (error) {
-            Materialize.toast("Fehler beim Laden der Personen", 4000);
+            Materialize.toast("Fehler beim Laden der Personen", 4000, 'red rounded');
         });
     $scope.changePerson = function (id) {
         angular.forEach($scope.data.persons, function (person) {
