@@ -4,10 +4,10 @@
         <div class="col s3 m3 l3">
             <a class='dropdown-button btn green' data-activates='dropdown1'>
                 <span ng-show="data.selectedPerson.id">{{ data.selectedPerson.vorname + ' ' + data.selectedPerson.nachname }}</span>
-                <span ng-show="!data.selectedPerson.id">Bitte auswählen</span>
+                <span ng-show="!data.selectedPerson.id">Person auswählen</span>
             </a>
             <ul id='dropdown1' class='dropdown-content'>
-                <li><a>Bitte Person auswählen</a></li>
+                <li><a>Person auswählen</a></li>
                 <li class="divider"></li>
                 <li ng-repeat="person in data.persons"><a ng-click="changePerson(person.id)">{{ person.vorname + ' ' + person.nachname }}</a></li>
             </ul>
