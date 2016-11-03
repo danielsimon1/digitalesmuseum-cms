@@ -24,10 +24,31 @@
                 </div>
                 <div class="card-stacked">
                     <div class="card-content">
-                        <span class="card-title">{{ data.selectedPerson.vorname + ' ' + data.selectedPerson.nachname }}</span>
-                        <p style="margin-bottom: 10px">{{ data.selectedPerson.caption }}</p>
-                        <div class="chip" ng-repeat="chip in data.selectedPerson.chips">
+                        <span class="card-title" style="line-height: 0">
+                            <span ng-show="!editMode">{{ data.selectedPerson.vorname + ' ' + data.selectedPerson.nachname }}</span>
+                            <span ng-show="editMode">
+                                <label for="vorname">Vorname:</label>
+                                <input type="text" id="vorname" ng-model="data.selectedPerson.vorname">
+                                <label for="nachname">Nachname:</label>
+                                <input type="text" id="nachname" ng-model="data.selectedPerson.nachname">
+                            </span>
+                        </span>
+                        <p style="margin-bottom: 10px" ng-show="!editMode">{{ data.selectedPerson.caption }}</p>
+                        <div ng-show="editMode">
+                            <label for="caption">Caption:</label>
+                            <input type="text" id="caption" ng-model="data.selectedPerson.caption">
+                        </div>
+                        <div class="chip" ng-repeat="chip in data.selectedPerson.chips" ng-show="!editMode">
                             {{ chip.text }}
+                        </div>
+                        <div class="chip" ng-repeat="chip in data.selectedPerson.chips" ng-show="editMode">
+                            {{ chip.text }}
+                            <i class="close material-icons" ng-click="removeChip(chip)">close</i>
+                        </div>
+                        <div ng-show="editMode">
+                            <label for="addchip">Neuer Chip:</label>
+                            <input type="text" id="addchip" ng-model="data.newChip">
+                            <button class="btn" ng-click="addChip()">hinzufügen</button>
                         </div>
                     </div>
 
@@ -35,7 +56,10 @@
             </div>
         </div>
         <div class="col s3 m3 l3" ng-show="data.selectedPerson.id">
-            <button class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></button>
+            <button class="btn-floating btn-large waves-effect waves-light blue" ng-click="toggleEditMode()"><i class="material-icons">edit</i>
+            </button>
+            <button class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i>
+            </button>
         </div>
 
     </div>
@@ -47,22 +71,28 @@
                 <th>Typ</th>
                 <th>Caption / Payload</th>
                 <th>Bild</th>
-                <th>Aktionen</th>
+                <th ng-show="editMode">Aktionen</th>
             </tr>
             </thead>
 
             <tbody>
             <tr ng-repeat="slide in data.selectedPerson.slides">
                 <td>{{ slide.type }}</td>
-                <td>{{ slide.type === "DataTile" ? slide.payload : slide.caption }}</td>
-                <td><span ng-show="slide.type === 'ImageTile'"><img ng-src="{{ slide.src.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}"></span></td>
-                <td>
-                    <a class="btn-floating btn-large waves-effect waves-light blue"><i class="material-icons">edit</i></a>
-                    <a class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                <td ng-show="!editMode">{{ slide.type === "DataTile" ? slide.payload : slide.caption }}</td>
+                <td ng-show="editMode">
+                    <input ng-show="slide.type === 'DataTile'" type="text" ng-model="slide.payload">
+                    <input ng-show="slide.type === 'ImageTile'" type="text" ng-model="slide.caption">
+                </td>
+                <td><span ng-show="slide.type === 'ImageTile'"><img
+                        ng-src="{{ slide.src.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}"></span>
+                </td>
+                <td ng-show="editMode">
+                    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="removeSlide(slide)"><i class="material-icons">delete</i></a>
                 </td>
             </tr>
-            <tr>
-                <td><a class="btn-floating btn-large waves-effect waves-light green"><i class="material-icons">add</i></a></td>
+            <tr ng-show="editMode">
+                <td><a class="btn-floating btn-large waves-effect waves-light green" href="#modal"><i
+                        class="material-icons">add</i></a></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -70,4 +100,14 @@
             </tbody>
         </table>
     </center>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h4>Neue Slide hinzufügen</h4>
+            <p>Von welcher Art soll die neue Slide sein?</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">ImageTile</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">DataTile</a>
+        </div>
+    </div>
 </main>

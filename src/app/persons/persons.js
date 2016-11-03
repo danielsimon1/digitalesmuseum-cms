@@ -9,8 +9,36 @@ angular.module('app.persons').config(function ($stateProvider) {
 }).controller('PersonsCtrl', function ($scope, persons, $log) {
     $scope.data = {};
     $scope.data.selectedPerson = {};
+    $scope.editMode = false;
+    $scope.toggleEditMode = function () {
+        $scope.editMode ? $scope.editMode = false : $scope.editMode = true;
+    };
+    $scope.addChip = function () {
+        $scope.data.selectedPerson.chips.push({
+            letter: $scope.data.newChip.substring(0,1).toUpperCase(),
+            text: $scope.data.newChip
+        });
+        $scope.data.newChip = "";
+    };
+    $scope.removeChip = function (inputChip) {
+        angular.forEach($scope.data.selectedPerson.chips, function (compareChip) {
+            if (angular.equals(inputChip, compareChip)) {
+                var index = $scope.data.selectedPerson.chips.indexOf(compareChip);
+                $scope.data.selectedPerson.chips.splice(index, 1);
+            }
+        })
+    };
+    $scope.removeSlide = function (inputSlide) {
+        angular.forEach($scope.data.selectedPerson.slides, function (compareSlide) {
+            if (angular.equals(inputSlide, compareSlide)) {
+                var index = $scope.data.selectedPerson.slides.indexOf(compareSlide);
+                $scope.data.selectedPerson.slides.splice(index, 1);
+            }
+        });
+    };
     $(document).ready(function () {
         $(".dropdown-button").dropdown();
+        $('.modal').modal();
     });
     persons.getAllPersons()
         .then(function (persons) {
