@@ -20,7 +20,7 @@
         <div class="col s4 m4 l4" ng-show="data.selectedPerson.id">
             <div class="card horizontal">
                 <div class="card-image">
-                    <img ng-src="{{ data.selectedPerson.portrait.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}">
+                    <img ng-src="{{ data.selectedPerson.portrait.url }}">
                 </div>
                 <div class="card-stacked">
                     <div class="card-content">
@@ -56,10 +56,12 @@
             </div>
         </div>
         <div class="col s3 m3 l3" ng-show="data.selectedPerson.id">
-            <button class="btn-floating btn-large waves-effect waves-light blue" ng-click="toggleEditMode()"><i class="material-icons">edit</i>
+            <button class="btn-floating btn-large waves-effect waves-light blue" ng-click="toggleEditMode()"><i
+                    class="material-icons">edit</i>
             </button>
             <button class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i>
             </button>
+            <a class="waves-effect waves-light btn-large green">Änderungen speichern</a>
         </div>
 
     </div>
@@ -70,7 +72,8 @@
             <tr>
                 <th>Typ</th>
                 <th>Caption / Payload</th>
-                <th>Bild</th>
+                <th>Bild-Vorschau</th>
+                <th ng-show="editMode">Bild-Upload</th>
                 <th ng-show="editMode">Aktionen</th>
             </tr>
             </thead>
@@ -80,14 +83,20 @@
                 <td>{{ slide.type }}</td>
                 <td ng-show="!editMode">{{ slide.type === "DataTile" ? slide.payload : slide.caption }}</td>
                 <td ng-show="editMode">
-                    <input ng-show="slide.type === 'DataTile'" type="text" ng-model="slide.payload">
-                    <input ng-show="slide.type === 'ImageTile'" type="text" ng-model="slide.caption">
+                    <input ng-show="slide.type === 'DataTile'" type="text" ng-model="slide.payload" placeholder="Payload">
+                    <input ng-show="slide.type === 'ImageTile'" type="text" ng-model="slide.caption" placeholder="Caption">
                 </td>
                 <td><span ng-show="slide.type === 'ImageTile'"><img
-                        ng-src="{{ slide.src.url.substring(4, data.selectedPerson.portrait.url.length - 1) }}"></span>
+                        ng-src="{{ slide.src.url }}"></span>
                 </td>
+                <td ng-show="editMode && slide.type === 'ImageTile'">
+                    <label for="image{{$index}}">URL zum Bild</label>
+                    <input placeholder="URL zum Bild" id="image{{$index}}" type="text" ng-model="slide.src.url">
+                </td>
+                <td ng-show="editMode && slide.type === 'DataTile'"></td>
                 <td ng-show="editMode">
-                    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="removeSlide(slide)"><i class="material-icons">delete</i></a>
+                    <a class="btn-floating btn-large waves-effect waves-light red" ng-click="removeSlide(slide)"><i
+                            class="material-icons">delete</i></a>
                 </td>
             </tr>
             <tr ng-show="editMode">
@@ -106,8 +115,10 @@
             <p>Von welcher Art soll die neue Slide sein?</p>
         </div>
         <div class="modal-footer">
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">ImageTile</a>
-            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">DataTile</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat"
+               ng-click="newTile('ImageTile')">ImageTile</a>
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat"
+               ng-click="newTile('DataTile')">DataTile</a>
         </div>
     </div>
 </main>

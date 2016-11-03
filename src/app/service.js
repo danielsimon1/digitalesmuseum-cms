@@ -46,6 +46,17 @@ angular.module('app')
             return q.promise;
         };
 
+        service.updatePerson = function (person) {
+            var q = $q.defer();
+            $http.put(rootUrl + 'persons/' + person.id, person)
+                .then(function (response) {
+                    q.resolve(response.data);
+                }, function (error) {
+                    q.reject(error);
+                });
+            return q.promise;
+        };
+
         service.deletePerson = function (id) {
             var q = $q.defer();
             $http.delete(rootUrl + 'persons/' + id)
@@ -68,24 +79,29 @@ angular.module('app')
             return q.promise;
         };
 
+        function _mapPerson(person) {
+            var mappedPerson = {};
+            mappedPerson = {
+                id: person.id,
+                vorname: person.vorname,
+                nachname: person.nachname,
+                caption: person.caption,
+                portrait: {
+                    url: person.portrait.url,
+                    width: person.portrait.width,
+                    height: person.portrait.height
+                },
+                chips: _mapChips(person.chips),
+                slides: _mapSlides(person.slides)
+            };
+            return mappedPerson;
+        }
+
         function _mapPersons(input) {
             var mappedPersons = [];
 
             angular.forEach(input, function (person) {
-                var mappedPerson = {};
-                mappedPerson = {
-                    vorname: person.vorname,
-                    nachname: person.nachname,
-                    caption: person.caption,
-                    portrait: {
-                        url: person.portrait.url,
-                        width: person.portrait.width,
-                        height: person.portrait.height
-                    },
-                    chips: _mapChips(person.chips),
-                    slides: _mapSlides(person.slides)
-                };
-                mappedPersons.push(mappedPerson);
+                mappedPersons.push(_mapPerson(person));
             });
 
             return mappedPersons;

@@ -54,12 +54,30 @@ angular.module('app.persons').config(function ($stateProvider) {
             }
         });
     };
+    $scope.newTile = function (type) {
+        if (type === "ImageTile") {
+            $scope.data.selectedPerson.slides.push({
+                type: type,
+                caption: "",
+                src: {
+                    url: "",
+                    height: 0,
+                    width: 0
+                }
+            });
+        } else if (type === "DataTile") {
+            $scope.data.selectedPerson.slides.push({
+                type: type,
+                payload: ""
+            });
+        }
+    };
     //test data
     $scope.data.persons = [
         {
             vorname: "Alan", nachname: "Turing", caption: "First human on the moon", id: 3,
             portrait: {
-                url: "url(https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg)",
+                url: "https://upload.wikimedia.org/wikipedia/commons/a/a1/Alan_Turing_Aged_16.jpg",
                 width: "707px", height: "919px"
             },
             chips: [
@@ -71,44 +89,44 @@ angular.module('app.persons').config(function ($stateProvider) {
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x400)", height: "400px", width: "300px"}
+                    src: {url: "http://placehold.it/300x400", height: "400px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 }
             ]
         },
         {
             vorname: "Alan", nachname: "Turing", caption: "First human on the moon", id: 1,
             portrait: {
-                url: "url(http://placehold.it/600x600)",
+                url: "http://placehold.it/600x600",
                 width: "600px", height: "600px"
             },
             chips: [
@@ -120,44 +138,44 @@ angular.module('app.persons').config(function ($stateProvider) {
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x400)", height: "400px", width: "300px"}
+                    src: {url: "http://placehold.it/300x400", height: "400px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 }
             ]
         },
         {
             vorname: "Alan", nachname: "Turing", caption: "First human on the moon", id: 2,
             portrait: {
-                url: "url(http://placehold.it/600x600)",
+                url: "http://placehold.it/600x600",
                 width: "600px", height: "600px"
             },
             chips: [
@@ -169,37 +187,37 @@ angular.module('app.persons').config(function ($stateProvider) {
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x400)", height: "400px", width: "300px"}
+                    src: {url: "http://placehold.it/300x400", height: "400px", width: "300px"}
                 },
                 {
                     type: "ImageTile",
                     caption: "Bomba",
-                    src: {url: "url(http://placehold.it/300x200)", height: "200px", width: "300px"}
+                    src: {url: "http://placehold.it/300x200", height: "200px", width: "300px"}
                 }
             ]
         }
