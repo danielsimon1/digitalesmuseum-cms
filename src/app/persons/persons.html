@@ -7,7 +7,7 @@
                 <span ng-show="!data.selectedPerson.id">Person auswählen</span>
             </a>
             <ul id='dropdown1' class='dropdown-content'>
-                <li><a>Person auswählen</a></li>
+                <li><a>Neue Person hinzufügen</a></li>
                 <li class="divider"></li>
                 <li ng-repeat="person in data.persons">
                     <a ng-click="changePerson(person.id)">
@@ -54,6 +54,11 @@
                             <label for="image-src">Bild-URL:</label>
                             <input type="text" id="image-src" ng-model="data.selectedPerson.portrait.url">
                         </div>
+                        <div ng-show="editMode">
+                            <input type="text" id="portrait-width" ng-model="data.selectedPerson.portrait.width" style="width: 80px">
+                            x
+                            <input type="text" id="portrait-height" ng-model="data.selectedPerson.portrait.height" style="width: 80px">
+                        </div>
                         <div class="chip" ng-repeat="chip in data.selectedPerson.chips" ng-show="!editMode">
                             {{ chip.text }}
                         </div>
@@ -77,7 +82,7 @@
             </button>
             <button class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i>
             </button>
-            <a class="waves-effect waves-light btn-large green">Änderungen speichern</a>
+            <a class="waves-effect waves-light btn-large green" ng-click="save()">Änderungen speichern</a>
         </div>
 
     </div>

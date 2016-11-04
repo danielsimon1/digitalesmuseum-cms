@@ -10,6 +10,7 @@ angular.module('app.persons').config(function ($stateProvider) {
     $scope.data = {};
     $scope.data.selectedPerson = {};
     $scope.editMode = false;
+    $scope.data.isTouched = false;
 
     $(document).ready(function () {
         $(".dropdown-button").dropdown();
@@ -86,4 +87,49 @@ angular.module('app.persons').config(function ($stateProvider) {
             height: 0
         });
     };
+
+    $scope.save = function () {
+        $scope.data.isTouched = true;
+        // check if all is valid
+        var isValid = true;
+        // local variable for clarity reasons
+        var test = $scope.data.selectedPerson;
+        $log.log(typeof parseInt(test.portrait.width));
+        if (test.firstname && test.lastname && test.caption && test.portrait.url && test.portrait.source && test.portrait.caption && !isNaN(parseInt(test.portrait.width)) && !isNaN(parseInt(test.portrait.height))) {
+            // DataTiles
+            angular.forEach(test.dataTiles, function (tile) {
+                if (tile.button_text && tile.long_text && tile.short_text) {
+                    // all good
+                } else {
+                    $log.warn("DataTileError");
+                    isValid = false;
+                }
+            });
+            // ImageTiles
+            angular.forEach(test.imageTiles, function (tile) {
+                if (tile.url && tile.source && tile.caption && !isNaN(parseInt(tile.width)) && !isNaN(parseInt(tile.height))) {
+                    // all good
+                } else {
+                    $log.warn("ImageTileError");
+                    isValid = false;
+                }
+            });
+            // Chips
+            angular.forEach(test.chips, function (chip) {
+                if (chip.letter && chip.text) {
+                    // all good
+                } else {
+                    isValid = false;
+                }
+            })
+        } else {
+            $log.warn("GeneralError");
+            isValid = false;
+        }
+        if (!isValid) {
+            Materialize.toast("Fehlende oder fehlerhafte Angaben!", 4000, "red rounded");
+        } else {
+            // send to backend
+        }
+    }
 });
