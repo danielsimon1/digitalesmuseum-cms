@@ -103,9 +103,9 @@
                     <td ng-show="!editMode">{{ tile.button_text }}</td>
                     <td ng-show="!editMode">{{ tile.short_text }}</td>
                     <td ng-show="!editMode">{{ tile.long_text }}</td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.button_text"></td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.short_text"></td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.long_text"></td>
+                    <td ng-show="editMode"><input type="text" ng-model="tile.button_text" ng-class="{'invalid': !tile.button_text && isTouched}"></td>
+                    <td ng-show="editMode"><input type="text" ng-model="tile.short_text" ng-class="{'invalid': !tile.short_text && isTouched}"></td>
+                    <td ng-show="editMode"><input type="text" ng-model="tile.long_text" ng-class="{'invalid': !tile.long_text && isTouched}"></td>
                     <td ng-show="editMode">
                         <a class="btn-floating btn-large waves-effect waves-light red" ng-click="removeDataTile(tile)"><i
                                 class="material-icons">delete</i></a>
@@ -142,13 +142,13 @@
                     <td ng-show="!editMode">{{ tile.caption }}</td>
                     <td ng-show="!editMode">{{ tile.source }}</td>
                     <td ng-show="!editMode">{{ tile.width + 'x' + tile.height }}</td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.url"></td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.caption"></td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.source"></td>
+                    <td ng-show="editMode"><input type="text" ng-model="tile.url" ng-class="{'invalid': !tile.url && isTouched}"></td>
+                    <td ng-show="editMode"><input type="text" ng-model="tile.caption" ng-class="{'invalid': !tile.caption && isTouched}"></td>
+                    <td ng-show="editMode"><input type="text" ng-model="tile.source" ng-class="{'invalid': !tile.source && isTouched}"></td>
                     <td ng-show="editMode">
-                        <input type="text" ng-model="tile.width" style="width: 100px">
+                        <input type="text" ng-model="tile.width" style="width: 100px" ng-class="{'invalid': !isValidNumber(tile.width) && isTouched}">
                         <span>x</span>
-                        <input type="text" ng-model="tile.height" style="width: 100px">
+                        <input type="text" ng-model="tile.height" style="width: 100px" ng-class="{'invalid': !isValidNumber(tile.height) && isTouched}">
                     </td>
                     <td ng-show="editMode">
                         <a class="btn-floating btn-large waves-effect waves-light red" ng-click="removeImageTile(tile)"><i
