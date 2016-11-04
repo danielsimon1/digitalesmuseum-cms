@@ -19,13 +19,16 @@ angular.module('app.persons').config(function ($stateProvider) {
         $(".modal").modal();
     });
 
-    persons.getAllPersons()
-        .then(function (persons) {
-            $log.log('persons', persons);
-            $scope.data.persons = persons;
-        }, function (error) {
-            Materialize.toast("Fehler beim Laden der Personen", 4000, 'red rounded');
-        });
+    function loadPersons() {
+        persons.getAllPersons()
+            .then(function (persons) {
+                $log.log('persons', persons);
+                $scope.data.persons = persons;
+            }, function (error) {
+                Materialize.toast("Fehler beim Laden der Personen", 4000, 'red rounded');
+            });
+    }
+    loadPersons();
 
     $scope.newPerson = function () {
         $scope.data.selectedPerson = {
@@ -62,6 +65,7 @@ angular.module('app.persons').config(function ($stateProvider) {
                 .then(function () {
                     $scope.data.selectedPerson = {};
                     Materialize.toast("Die Person wurde erfolgreich gelöscht.", 4000, "rounded green");
+                    loadPersons();
                 }, function () {
                     Materialize.toast("Fehler beim Löschen der Person.", 4000, "rounded red");
                 });
@@ -180,8 +184,10 @@ angular.module('app.persons').config(function ($stateProvider) {
             } else {
                 // create new
                 persons.addPerson($scope.data.selectedPerson)
-                    .then(function () {
+                    .then(function (response) {
                         Materialize.toast("Speichern war erfolgreich!", 4000, "green rounded");
+                        $scope.data.selectedPerson.id = response.id;
+                        loadPersons();
                     }, function (error) {
                         Materialize.toast("Speichern war nicht erfolgreich!", 4000, "red rounded");
                     });
