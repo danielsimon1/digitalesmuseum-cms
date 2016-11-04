@@ -15,7 +15,6 @@
                 </li>
             </ul>
         </div>
-
         <div class="col s4 m4 l4" ng-show="!isEmpty(data.selectedPerson)">
             <div class="card horizontal">
                 <div class="card-image">
@@ -97,15 +96,14 @@
                     <th ng-show="editMode">Aktionen</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr ng-repeat="tile in data.selectedPerson.dataTiles">
                     <td ng-show="!editMode">{{ tile.button_text }}</td>
                     <td ng-show="!editMode">{{ tile.short_text }}</td>
                     <td ng-show="!editMode">{{ tile.long_text }}</td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.button_text" ng-class="{'invalid': !tile.button_text && isTouched}"></td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.short_text" ng-class="{'invalid': !tile.short_text && isTouched}"></td>
-                    <td ng-show="editMode"><input type="text" ng-model="tile.long_text" ng-class="{'invalid': !tile.long_text && isTouched}"></td>
+                    <td ng-show="editMode"><textarea class="materialize-textarea" ng-model="tile.button_text" ng-class="{'invalid': !tile.button_text && isTouched}"></textarea></td>
+                    <td ng-show="editMode"><textarea class="materialize-textarea" ng-model="tile.short_text" ng-class="{'invalid': !tile.short_text && isTouched}"></textarea></td>
+                    <td ng-show="editMode"><textarea class="materialize-textarea" ng-model="tile.long_text" ng-class="{'invalid': !tile.long_text && isTouched}"></textarea></td>
                     <td ng-show="editMode">
                         <a class="btn-floating btn-large waves-effect waves-light red" ng-click="removeDataTile(tile)"><i
                                 class="material-icons">delete</i></a>
@@ -135,7 +133,6 @@
                     <th ng-show="editMode">Aktionen</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <tr ng-repeat="tile in data.selectedPerson.imageTiles">
                     <td ng-show="!editMode"><img ng-src="{{tile.url}}" style="max-width: 500px"></td>

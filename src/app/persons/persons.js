@@ -17,6 +17,7 @@ angular.module('app.persons').config(function ($stateProvider) {
     $(document).ready(function () {
         $(".dropdown-button").dropdown();
         $(".modal").modal();
+        $('.materialize-textarea').trigger('autoresize');
     });
 
     function loadPersons() {
@@ -28,6 +29,7 @@ angular.module('app.persons').config(function ($stateProvider) {
                 Materialize.toast("Fehler beim Laden der Personen", 4000, 'red rounded');
             });
     }
+
     loadPersons();
 
     $scope.newPerson = function () {
@@ -56,6 +58,7 @@ angular.module('app.persons').config(function ($stateProvider) {
                 angular.copy(person, $scope.data.selectedPerson);
             }
         });
+        $('.materialize-textarea').trigger('autoresize');
     };
 
     $scope.deletePerson = function () {
@@ -76,6 +79,7 @@ angular.module('app.persons').config(function ($stateProvider) {
 
     $scope.toggleEditMode = function () {
         $scope.editMode ? $scope.editMode = false : $scope.editMode = true;
+        $('.materialize-textarea').trigger('autoresize');
     };
 
     $scope.addChip = function () {
@@ -196,9 +200,9 @@ angular.module('app.persons').config(function ($stateProvider) {
     };
 
     // checks if object is empty
-    $scope.isEmpty = function(obj) {
-        for(var prop in obj) {
-            if(obj.hasOwnProperty(prop))
+    $scope.isEmpty = function (obj) {
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
                 return false;
         }
         return true;
@@ -211,5 +215,5 @@ angular.module('app.persons').config(function ($stateProvider) {
         } else {
             return false;
         }
-    }
+    };
 });
