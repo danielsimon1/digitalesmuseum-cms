@@ -27,9 +27,9 @@
                             <span ng-show="!editMode">{{ data.selectedPerson.firstname + ' ' + data.selectedPerson.lastname }}</span>
                             <span ng-show="editMode">
                                 <label for="firstname">Vorname:</label>
-                                <input type="text" id="firstname" ng-model="data.selectedPerson.firstname">
+                                <input type="text" id="firstname" ng-model="data.selectedPerson.firstname" ng-class="{'invalid': !data.selectedPerson.firstname && isTouched}">
                                 <label for="lastname">Nachname:</label>
-                                <input type="text" id="lastname" ng-model="data.selectedPerson.lastname">
+                                <input type="text" id="lastname" ng-model="data.selectedPerson.lastname" ng-class="{'invalid': !data.selectedPerson.lastname && isTouched}">
                             </span>
                         </span>
                         <p ng-show="!editMode">"{{ data.selectedPerson.caption }}"</p>
@@ -39,24 +39,24 @@
                         </p>
                         <div ng-show="editMode">
                             <label for="caption">Person-Caption:</label>
-                            <input type="text" id="caption" ng-model="data.selectedPerson.caption">
+                            <input type="text" id="caption" ng-model="data.selectedPerson.caption" ng-class="{'invalid': !data.selectedPerson.caption && isTouched}">
                         </div>
                         <div ng-show="editMode">
                             <label for="portraitCaption">Portrait-Caption:</label>
-                            <input type="text" id="portraitCaption" ng-model="data.selectedPerson.portrait.caption">
+                            <input type="text" id="portraitCaption" ng-model="data.selectedPerson.portrait.caption" ng-class="{'invalid': !data.selectedPerson.portrait.caption && isTouched}">
                         </div>
                         <div ng-show="editMode">
                             <label for="source">Portrait-Quelle:</label>
-                            <input type="text" id="source" ng-model="data.selectedPerson.portrait.source">
+                            <input type="text" id="source" ng-model="data.selectedPerson.portrait.source" ng-class="{'invalid': !data.selectedPerson.portrait.source && isTouched}">
                         </div>
                         <div ng-show="editMode">
                             <label for="image-src">Bild-URL:</label>
-                            <input type="text" id="image-src" ng-model="data.selectedPerson.portrait.url">
+                            <input type="text" id="image-src" ng-model="data.selectedPerson.portrait.url" ng-class="{'invalid': !data.selectedPerson.portrait.url && isTouched}">
                         </div>
                         <div ng-show="editMode">
-                            <input type="text" id="portrait-width" ng-model="data.selectedPerson.portrait.width" style="width: 80px">
+                            <input type="text" id="portrait-width" ng-model="data.selectedPerson.portrait.width" style="width: 80px" ng-class="{'invalid': !isValidNumber(data.selectedPerson.portrait.width) && isTouched}">
                             x
-                            <input type="text" id="portrait-height" ng-model="data.selectedPerson.portrait.height" style="width: 80px">
+                            <input type="text" id="portrait-height" ng-model="data.selectedPerson.portrait.height" style="width: 80px" ng-class="{'invalid': !isValidNumber(data.selectedPerson.portrait.height) && isTouched}">
                         </div>
                         <div class="chip" ng-repeat="chip in data.selectedPerson.chips" ng-show="!editMode">
                             {{ chip.text }}
@@ -67,7 +67,7 @@
                         </div>
                         <div ng-show="editMode">
                             <label for="addchip">Neuer Chip:</label>
-                            <input type="text" id="addchip" ng-model="data.newChip">
+                            <input type="text" id="addchip" ng-model="data.newChip" ng-class="{'invalid': !data.selectedPerson.chips.length && isTouched}">
                             <button class="btn" ng-click="addChip()">hinzufügen</button>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
         </center>
     </div>
     <div ng-show="!isEmpty(data.selectedPerson) && (data.selectedPerson.imageTiles.length || editMode)">
-        <h4>ImageTiles</h4>
+        <h4 ng-class="{'invalid': !data.selectedPerson.imageTiles.length && isTouched}">ImageTiles</h4>
         <center>
             <table class="bordered">
                 <thead>

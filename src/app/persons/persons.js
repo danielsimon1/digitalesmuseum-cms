@@ -127,13 +127,13 @@ angular.module('app.persons').config(function ($stateProvider) {
     };
 
     $scope.save = function () {
-        $scope.data.isTouched = true;
+        $scope.isTouched = true;
         // check if all is valid
         var isValid = true;
         // local variable for clarity reasons
         var test = $scope.data.selectedPerson;
         $log.log(typeof parseInt(test.portrait.width));
-        if (test.firstname && test.lastname && test.caption && test.portrait.url && test.portrait.source && test.portrait.caption && !isNaN(parseInt(test.portrait.width)) && !isNaN(parseInt(test.portrait.height))) {
+        if (test.firstname && test.lastname && test.caption && test.portrait.url && test.portrait.source && test.portrait.caption && !isNaN(parseInt(test.portrait.width)) && !isNaN(parseInt(test.portrait.height)) && test.chips.length > 0 && test.imageTiles.length > 0) {
             // DataTiles
             angular.forEach(test.dataTiles, function (tile) {
                 if (tile.button_text && tile.long_text && tile.short_text) {
@@ -166,6 +166,7 @@ angular.module('app.persons').config(function ($stateProvider) {
         }
         if (!isValid) {
             Materialize.toast("Fehlende oder fehlerhafte Angaben!", 4000, "red rounded");
+            $scope.editMode = true;
         } else {
             // send to backend
             if (test.id) {
@@ -196,4 +197,13 @@ angular.module('app.persons').config(function ($stateProvider) {
         }
         return true;
     };
+    // checks if number is int and >= 0
+    $scope.isValidNumber = function (num) {
+        num = parseInt(num);
+        if (!isNaN(num)) {
+            return num >= 0;
+        } else {
+            return false;
+        }
+    }
 });
