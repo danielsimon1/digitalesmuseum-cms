@@ -16,4 +16,4 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider) {
 
 }).run(function ($rootScope) {
 
-}).constant('rootUrl', '');
+}).constant('rootUrl', 'http://it-dmuseum3.dhbw-stuttgart.de:443/');
