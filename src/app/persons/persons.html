@@ -3,11 +3,10 @@
     <div class="row">
         <div class="col s3 m3 l3">
             <a class='dropdown-button btn green' data-activates='dropdown1'>
-                <span ng-show="data.selectedPerson.id">{{ data.selectedPerson.firstname + ' ' + data.selectedPerson.lastname }}</span>
-                <span ng-show="!data.selectedPerson.id">Person auswählen</span>
+                <span>Person auswählen</span>
             </a>
             <ul id='dropdown1' class='dropdown-content'>
-                <li><a>Neue Person hinzufügen</a></li>
+                <li><a ng-click="newPerson()">Neue Person hinzufügen</a></li>
                 <li class="divider"></li>
                 <li ng-repeat="person in data.persons">
                     <a ng-click="changePerson(person.id)">
@@ -17,7 +16,7 @@
             </ul>
         </div>
 
-        <div class="col s4 m4 l4" ng-show="data.selectedPerson.id">
+        <div class="col s4 m4 l4" ng-show="!isEmpty(data.selectedPerson)">
             <div class="card horizontal">
                 <div class="card-image">
                     <img ng-src="{{ data.selectedPerson.portrait.url }}">
@@ -76,17 +75,17 @@
                 </div>
             </div>
         </div>
-        <div class="col s3 m3 l3" ng-show="data.selectedPerson.id">
+        <div class="col s3 m3 l3" ng-show="!isEmpty(data.selectedPerson)">
             <button class="btn-floating btn-large waves-effect waves-light blue" ng-click="toggleEditMode()"><i
                     class="material-icons">edit</i>
             </button>
-            <button class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">delete</i>
-            </button>
+            <a class="btn-floating btn-large waves-effect waves-light red" href="#confirmPersonDelete"><i class="material-icons">delete</i>
+            </a>
             <a class="waves-effect waves-light btn-large green" ng-click="save()">Änderungen speichern</a>
         </div>
 
     </div>
-    <div ng-show="data.selectedPerson.id && (data.selectedPerson.dataTiles.length || editMode)">
+    <div ng-show="!isEmpty(data.selectedPerson) && (data.selectedPerson.dataTiles.length || editMode)">
         <h4>DataTiles</h4>
         <center>
             <table class="bordered">
@@ -123,7 +122,7 @@
             </table>
         </center>
     </div>
-    <div ng-show="data.selectedPerson.id && (data.selectedPerson.imageTiles.length || editMode)">
+    <div ng-show="!isEmpty(data.selectedPerson) && (data.selectedPerson.imageTiles.length || editMode)">
         <h4>ImageTiles</h4>
         <center>
             <table class="bordered">
@@ -139,7 +138,7 @@
 
                 <tbody>
                 <tr ng-repeat="tile in data.selectedPerson.imageTiles">
-                    <td ng-show="!editMode"><img ng-src="{{tile.url}}"></td>
+                    <td ng-show="!editMode"><img ng-src="{{tile.url}}" style="max-width: 500px"></td>
                     <td ng-show="!editMode">{{ tile.caption }}</td>
                     <td ng-show="!editMode">{{ tile.source }}</td>
                     <td ng-show="!editMode">{{ tile.width + 'x' + tile.height }}</td>
@@ -166,5 +165,15 @@
                 </tbody>
             </table>
         </center>
+    </div>
+    <div id="confirmPersonDelete" class="modal">
+        <div class="modal-content">
+            <h4>Achtung</h4>
+            <p>Möchten Sie diese Person wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.</p>
+        </div>
+        <div class="modal-footer">
+            <a ng-click="deletePerson()" class="modal-action modal-close waves-effect waves-green btn-flat">Ja</a>
+            <a href="" class="modal-action modal-close waves-effect waves-green btn-flat">Nein</a>
+        </div>
     </div>
 </main>

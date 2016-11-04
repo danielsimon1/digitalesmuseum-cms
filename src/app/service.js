@@ -37,7 +37,9 @@ angular.module('app')
 
         service.addPerson = function (person) {
             var q = $q.defer();
-            $http.post(rootUrl + 'person/add', person)
+            var mappedPerson = _mapPersonForBackend(person);
+            $log.log(mappedPerson);
+            $http.put(rootUrl + 'person/new', mappedPerson)
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
@@ -48,7 +50,9 @@ angular.module('app')
 
         service.updatePerson = function (person) {
             var q = $q.defer();
-            $http.put(rootUrl + 'person/' + person.id, person)
+            var mappedPerson = _mapPersonForBackend(person);
+            $log.log(JSON.stringify(mappedPerson));
+            $http.patch(rootUrl + 'person/' + person.id, mappedPerson)
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
@@ -59,7 +63,8 @@ angular.module('app')
 
         service.deletePerson = function (id) {
             var q = $q.defer();
-            $http.delete(rootUrl + 'persons/' + id)
+            $log.log(rootUrl + 'person/' + id);
+            $http.delete(rootUrl + 'person/' + id)
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
@@ -68,16 +73,28 @@ angular.module('app')
             return q.promise;
         };
 
-        service.deletePerson = function (person, id) {
-            var q = $q.defer();
-            $http.post(rootUrl + 'person/' + id, person)
-                .then(function (response) {
-                    q.resolve(response.data);
-                }, function (error) {
-                    q.reject(error);
-                });
-            return q.promise;
-        };
+        function _mapPersonForBackend(person) {
+            var mappedPerson = {};
+            mappedPerson = {
+                firstname: person.firstname,
+                lastname: person.lastname,
+                caption: person.caption,
+                portrait: [{
+                    url: person.portrait.url,
+                    width: parseInt(person.portrait.width),
+                    height: parseInt(person.portrait.height),
+                    caption: person.portrait.caption,
+                    source: person.portrait.source
+                }],
+                chips: _mapChips(person.chips),
+                dataTiles: _mapDataTiles(person.dataTiles),
+                imageTiles: _mapImageTiles(person.imageTiles)
+            };
+            if (person.id) {
+                mappedPerson.id = person.id;
+            }
+            return mappedPerson;
+        }
 
         function _mapPerson(person) {
             var mappedPerson = {};

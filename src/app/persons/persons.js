@@ -11,10 +11,64 @@ angular.module('app.persons').config(function ($stateProvider) {
     $scope.data.selectedPerson = {};
     $scope.editMode = false;
     $scope.data.isTouched = false;
+    $log.log($scope.data.selectedPerson);
+    $log.log(Object.keys($scope.data.selectedPerson).length);
 
     $(document).ready(function () {
         $(".dropdown-button").dropdown();
+        $(".modal").modal();
     });
+
+    persons.getAllPersons()
+        .then(function (persons) {
+            $log.log('persons', persons);
+            $scope.data.persons = persons;
+        }, function (error) {
+            Materialize.toast("Fehler beim Laden der Personen", 4000, 'red rounded');
+        });
+
+    $scope.newPerson = function () {
+        $scope.data.selectedPerson = {
+            firstname: "",
+            lastname: "",
+            caption: "",
+            portrait: {
+                url: "",
+                width: "",
+                height: "",
+                caption: "",
+                source: ""
+            },
+            chips: [],
+            imageTiles: [],
+            dataTiles: []
+        };
+        $scope.editMode = true;
+    };
+
+    $scope.changePerson = function (id) {
+        angular.forEach($scope.data.persons, function (person) {
+            if (person.id === id) {
+                $log.log(person);
+                angular.copy(person, $scope.data.selectedPerson);
+            }
+        });
+    };
+
+    $scope.deletePerson = function () {
+        var id = $scope.data.selectedPerson.id;
+        if (id) {
+            persons.deletePerson(id)
+                .then(function () {
+                    $scope.data.selectedPerson = {};
+                    Materialize.toast("Die Person wurde erfolgreich gelöscht.", 4000, "rounded green");
+                }, function () {
+                    Materialize.toast("Fehler beim Löschen der Person.", 4000, "rounded red");
+                });
+        } else {
+            Materialize.toast("Diese Person wurde noch nicht gespeichert. Um sie zu löschen, laden Sie die Seite neu.", 8000);
+        }
+    };
 
     $scope.toggleEditMode = function () {
         $scope.editMode ? $scope.editMode = false : $scope.editMode = true;
@@ -54,23 +108,6 @@ angular.module('app.persons').config(function ($stateProvider) {
         });
     };
 
-    persons.getAllPersons()
-        .then(function (persons) {
-            $log.log('persons', persons);
-            $scope.data.persons = persons;
-        }, function (error) {
-            Materialize.toast("Fehler beim Laden der Personen", 4000, 'red rounded');
-        });
-
-    $scope.changePerson = function (id) {
-        angular.forEach($scope.data.persons, function (person) {
-            if (person.id === id) {
-                $log.log(person);
-                angular.copy(person, $scope.data.selectedPerson);
-            }
-        });
-    };
-
     $scope.newDataTile = function () {
         $scope.data.selectedPerson.dataTiles.push({
             button_text: "",
@@ -78,6 +115,7 @@ angular.module('app.persons').config(function ($stateProvider) {
             short_text: ""
         });
     };
+
     $scope.newImageTile = function () {
         $scope.data.selectedPerson.imageTiles.push({
             url: "",
@@ -130,6 +168,32 @@ angular.module('app.persons').config(function ($stateProvider) {
             Materialize.toast("Fehlende oder fehlerhafte Angaben!", 4000, "red rounded");
         } else {
             // send to backend
+            if (test.id) {
+                // update existing
+                persons.updatePerson($scope.data.selectedPerson)
+                    .then(function () {
+                        Materialize.toast("Speichern war erfolgreich!", 4000, "green rounded");
+                    }, function (error) {
+                        Materialize.toast("Speichern war nicht erfolgreich!", 4000, "red rounded");
+                    });
+            } else {
+                // create new
+                persons.addPerson($scope.data.selectedPerson)
+                    .then(function () {
+                        Materialize.toast("Speichern war erfolgreich!", 4000, "green rounded");
+                    }, function (error) {
+                        Materialize.toast("Speichern war nicht erfolgreich!", 4000, "red rounded");
+                    });
+            }
         }
-    }
+    };
+
+    // checks if object is empty
+    $scope.isEmpty = function(obj) {
+        for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                return false;
+        }
+        return true;
+    };
 });
