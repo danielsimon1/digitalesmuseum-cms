@@ -4,15 +4,20 @@ angular.module('app')
 
         service.login = function (username, password) {
             var q = $q.defer();
-            var user = {
-                username: username,
-                password: password
-            };
-            $http.post(rootUrl + 'login', user)
+            $http.patch(rootUrl + 'person/-1', {}, {
+                headers: {
+                    'X-DM-User': username,
+                    'X-DM-Apikey': password
+                }
+            })
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
-                    q.reject(error);
+                    if (error.status === 401) {
+                        q.resolve();
+                    } else {
+                        q.reject(error);
+                    }
                 });
             return q.promise;
         };
@@ -20,8 +25,18 @@ angular.module('app')
         return service;
     })
 
-    .factory('persons', function ($q, $http, rootUrl, $log) {
+    .factory('persons', function ($q, $http, rootUrl, localStorageService) {
         var service = {};
+
+        function createHeader() {
+            var user = localStorageService.get('user');
+            return {
+                headers: {
+                    'X-DM-User': user.username,
+                    'X-DM-Apikey': user.password
+                }
+            };
+        }
 
         service.getAllPersons = function () {
             var q = $q.defer();
@@ -38,8 +53,7 @@ angular.module('app')
         service.addPerson = function (person) {
             var q = $q.defer();
             var mappedPerson = _mapPersonForBackend(person);
-            $log.log(mappedPerson);
-            $http.put(rootUrl + 'person/new', mappedPerson)
+            $http.put(rootUrl + 'person/new', mappedPerson, createHeader())
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
@@ -51,8 +65,7 @@ angular.module('app')
         service.updatePerson = function (person) {
             var q = $q.defer();
             var mappedPerson = _mapPersonForBackend(person);
-            $log.log(JSON.stringify(mappedPerson));
-            $http.patch(rootUrl + 'person/' + person.id, mappedPerson)
+            $http.patch(rootUrl + 'person/' + person.id, mappedPerson, createHeader())
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
@@ -63,8 +76,7 @@ angular.module('app')
 
         service.deletePerson = function (id) {
             var q = $q.defer();
-            $log.log(rootUrl + 'person/' + id);
-            $http.delete(rootUrl + 'person/' + id)
+            $http.delete(rootUrl + 'person/' + id, createHeader())
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {

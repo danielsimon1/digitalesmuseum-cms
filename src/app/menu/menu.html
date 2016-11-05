@@ -2,8 +2,8 @@
     <div class="nav-wrapper green">
         <a class="brand-logo" style="margin-left: 15px">Digitales Museum</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a ui-sref="app.login">Login</a></li>
-            <li><a ui-sref="app.persons">Personen</a></li>
+            <li><a ui-sref="app.login"><span ng-show="isLogin">Logout</span><span ng-show="!isLogin">Login</span></a></li>
+            <li ng-show="isLogin"><a ui-sref="app.persons">Personen</a></li>
         </ul>
     </div>
 </nav>

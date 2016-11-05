@@ -11,8 +11,6 @@ angular.module('app.persons').config(function ($stateProvider) {
     $scope.data.selectedPerson = {};
     $scope.editMode = false;
     $scope.data.isTouched = false;
-    $log.log($scope.data.selectedPerson);
-    $log.log(Object.keys($scope.data.selectedPerson).length);
 
     $(document).ready(function () {
         $(".dropdown-button").dropdown();
@@ -54,11 +52,11 @@ angular.module('app.persons').config(function ($stateProvider) {
     $scope.changePerson = function (id) {
         angular.forEach($scope.data.persons, function (person) {
             if (person.id === id) {
-                $log.log(person);
                 angular.copy(person, $scope.data.selectedPerson);
             }
         });
         $('.materialize-textarea').trigger('autoresize');
+        $scope.data.isTouched = false;
     };
 
     $scope.deletePerson = function () {
@@ -140,7 +138,6 @@ angular.module('app.persons').config(function ($stateProvider) {
         var isValid = true;
         // local variable for clarity reasons
         var test = $scope.data.selectedPerson;
-        $log.log(typeof parseInt(test.portrait.width));
         if (test.firstname && test.lastname && test.caption && test.portrait.url && test.portrait.source && test.portrait.caption && !isNaN(parseInt(test.portrait.width)) && !isNaN(parseInt(test.portrait.height)) && test.chips.length > 0 && test.imageTiles.length > 0) {
             // DataTiles
             angular.forEach(test.dataTiles, function (tile) {
