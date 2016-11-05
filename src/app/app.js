@@ -9,7 +9,8 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, local
         .state('app', {
             url: '/',
             templateUrl: 'src/app/menu/menu.html',
-            controller: 'AppCtrl'
+            controller: 'AppCtrl',
+            abstract: true
         });
     $urlRouterProvider.otherwise("login");
     localStorageServiceProvider.setPrefix('digitalesmuseum-cms');
