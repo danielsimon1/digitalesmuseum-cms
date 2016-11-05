@@ -159,8 +159,8 @@ angular.module('app')
                     url: tile.url,
                     source: tile.source,
                     caption: tile.caption,
-                    width: tile.width,
-                    height: tile.height
+                    width: parseInt(tile.width),
+                    height: parseInt(tile.height)
                 };
                 mapped.push(mappedTile);
             });
