@@ -12,7 +12,7 @@ angular.module('app').config(function ($stateProvider, $urlRouterProvider, local
             controller: 'AppCtrl',
             abstract: true
         });
-    $urlRouterProvider.otherwise("login");
+    $urlRouterProvider.otherwise("persons");
     localStorageServiceProvider.setPrefix('digitalesmuseum-cms');
 
 }).controller('AppCtrl', function ($rootScope, $scope, localStorageService, $state) {

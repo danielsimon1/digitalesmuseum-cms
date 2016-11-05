@@ -6,11 +6,14 @@ angular.module('app.persons').config(function ($stateProvider) {
             templateUrl: 'src/app/persons/persons.html',
             controller: 'PersonsCtrl'
         });
-}).controller('PersonsCtrl', function ($scope, persons, $log) {
+}).controller('PersonsCtrl', function ($scope, persons, $log, localStorageService, $state) {
     $scope.data = {};
     $scope.data.selectedPerson = {};
     $scope.editMode = false;
     $scope.data.isTouched = false;
+    if (!localStorageService.get('login')) {
+        $state.go('app.login');
+    }
 
     $(document).ready(function () {
         $(".dropdown-button").dropdown();
