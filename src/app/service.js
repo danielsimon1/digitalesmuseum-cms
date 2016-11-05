@@ -13,7 +13,7 @@ angular.module('app')
                 .then(function (response) {
                     q.resolve(response.data);
                 }, function (error) {
-                    if (error.status === 401) {
+                    if (error.status !== 401) {
                         q.resolve();
                     } else {
                         q.reject(error);
