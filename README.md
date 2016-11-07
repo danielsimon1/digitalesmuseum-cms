@@ -5,7 +5,7 @@ Dies ist das Github Projekt für das CMS (Content Management System) des Datenba
 Die Webseite kann direkt durch das Öffnen der `index.html` gestartet werden.
 
 ## Technologien
-Es werden HTML5, CSS3 und Javascript verwendet. Des Weiteren werden das Javascript-Framework AngularJS 1 und das CSS-Framework Materialize eingesetzt. Zudem wird der Packet-Manager Bower verwendet.
+Die Webseite basiert auf HTML5, JavaScript und CSS3. Zusätzlich werden das Javascript-Framework AngularJS und das CSS-Framework Materialize eingesetzt. Außerdem wird der Packet-Manager Bower verwendet.
 
 ## Struktur
 Im Ordner `src` befindet sich der Quellcode der Anwendung (außer der `index.html`).
